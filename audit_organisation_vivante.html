@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit d'entrée — Organisation vivante · Rinki Ohen Conseil</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --ink: #1a1a18;
+    --moss: #3d4a35;
+    --sage: #7a8c6e;
+    --lichen: #b5c4a8;
+    --fog: #e8ede3;
+    --cream: #f5f3ee;
+    --gold: #c4a35a;
+    --white: #fafaf7;
+    --section1: #4a6741;
+    --section2: #5c6b4f;
+    --section3: #6e7a5e;
+    --section4: #7d8a6d;
+    --section5: #8e9b7e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  .site-header {
+    background: var(--moss);
+    color: var(--fog);
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(196,163,90,0.08);
+    pointer-events: none;
+  }
+  .header-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .header-title em {
+    font-style: italic;
+    color: var(--lichen);
+  }
+  .header-sub {
+    font-size: 13px;
+    color: var(--lichen);
+    font-weight: 300;
+    margin-top: 8px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(181,196,168,0.25);
+    flex-wrap: wrap;
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 2px; }
+  .meta-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); }
+  .meta-value { font-size: 13px; color: var(--lichen); font-weight: 300; }
+
+  /* INTRO FIELDS */
+  .intro-block {
+    background: var(--white);
+    border-bottom: 1px solid var(--fog);
+    padding: 40px;
+  }
+  .intro-block h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--moss);
+    margin-bottom: 24px;
+  }
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 640px) { .intro-grid { grid-template-columns: 1fr; } }
+
+  /* PROGRESS BAR */
+  .progress-container {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid var(--fog);
+    padding: 12px 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .progress-bar-wrap {
+    flex: 1;
+    height: 3px;
+    background: var(--fog);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--moss), var(--gold));
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 2px;
+  }
+  .progress-label {
+    font-size: 11px;
+    color: var(--sage);
+    white-space: nowrap;
+    letter-spacing: 0.06em;
+  }
+
+  /* SECTIONS */
+  .audit-section {
+    padding: 48px 40px;
+    border-bottom: 1px solid var(--fog);
+  }
+  .audit-section:nth-child(odd) { background: var(--white); }
+  .audit-section:nth-child(even) { background: var(--cream); }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--fog);
+  }
+  .section-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--lichen);
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: -4px;
+  }
+  .section-title-group { flex: 1; }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--moss);
+    line-height: 1.2;
+  }
+  .section-sub {
+    font-size: 13px;
+    color: var(--sage);
+    margin-top: 6px;
+    font-style: italic;
+  }
+  .section-reveal {
+    font-size: 13px;
+    color: var(--sage);
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: var(--fog);
+    border-left: 3px solid var(--lichen);
+    border-radius: 0 4px 4px 0;
+    line-height: 1.5;
+  }
+
+  .subsection-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 32px 0 20px;
+  }
+  .subsection-title:first-of-type { margin-top: 0; }
+
+  /* QUESTION */
+  .question {
+    margin-bottom: 28px;
+    padding: 20px 22px;
+    background: var(--white);
+    border: 1px solid var(--fog);
+    border-radius: 6px;
+    transition: border-color 0.2s;
+  }
+  .audit-section:nth-child(even) .question { background: var(--white); }
+  .question:focus-within { border-color: var(--sage); }
+
+  .question-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .q-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--lichen);
+    flex-shrink: 0;
+    min-width: 24px;
+    line-height: 1.3;
+  }
+  .q-text {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.5;
+    flex: 1;
+  }
+  .q-hint {
+    font-size: 12px;
+    color: var(--sage);
+    font-style: italic;
+    margin: 6px 0 12px 36px;
+    line-height: 1.5;
+  }
+  .q-indices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 12px 36px;
+  }
+  .q-index-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: var(--fog);
+    color: var(--sage);
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+
+  /* INPUTS */
+  .field-wrap { margin-left: 36px; }
+
+  input[type="text"], input[type="email"], textarea, select {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--cream);
+    border: 1px solid var(--fog);
+    border-radius: 4px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    resize: vertical;
+  }
+  input[type="text"]:focus, input[type="email"]:focus,
+  textarea:focus, select:focus {
+    border-color: var(--sage);
+    background: var(--white);
+  }
+  textarea { min-height: 80px; }
+
+  /* SCALE */
+  .scale-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .scale-label { font-size: 12px; color: var(--sage); white-space: nowrap; }
+  .scale-buttons {
+    display: flex;
+    gap: 4px;
+  }
+  .scale-btn {
+    width: 36px; height: 36px;
+    border: 1px solid var(--fog);
+    border-radius: 4px;
+    background: var(--cream);
+    color: var(--sage);
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .scale-btn:hover { border-color: var(--sage); background: var(--fog); }
+  .scale-btn.selected { background: var(--moss); color: var(--white); border-color: var(--moss); }
+
+  /* RADIO / TRISTATE */
+  .radio-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .radio-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1px solid var(--fog);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--sage);
+    background: var(--cream);
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .radio-option:hover { border-color: var(--sage); }
+  .radio-option.selected { background: var(--moss); color: var(--white); border-color: var(--moss); }
+  .radio-option input { display: none; }
+
+  /* ENERGY SELECTOR */
+  .energy-group { display: flex; gap: 10px; flex-wrap: wrap; }
+  .energy-btn {
+    padding: 10px 18px;
+    border: 1px solid var(--fog);
+    border-radius: 4px;
+    background: var(--cream);
+    color: var(--sage);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+  .energy-btn:hover { border-color: var(--sage); }
+  .energy-btn.selected { background: var(--moss); color: var(--white); border-color: var(--moss); }
+
+  /* SUBMIT */
+  .submit-section {
+    padding: 48px 40px;
+    background: var(--moss);
+    text-align: center;
+  }
+  .submit-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .submit-section p {
+    font-size: 13px;
+    color: var(--lichen);
+    margin-bottom: 28px;
+  }
+  .submit-btn {
+    display: inline-block;
+    padding: 16px 48px;
+    background: var(--gold);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .submit-btn:hover { opacity: 0.88; }
+  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* RESULTS */
+  #results-panel {
+    display: none;
+    padding: 48px 40px;
+    background: var(--white);
+  }
+  .results-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--moss);
+    margin-bottom: 8px;
+  }
+  .results-subtitle {
+    font-size: 13px;
+    color: var(--sage);
+    margin-bottom: 40px;
+  }
+
+  .chart-wrap {
+    max-width: 500px;
+    margin: 0 auto 48px;
+  }
+
+  .indices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .index-card {
+    padding: 20px;
+    border: 1px solid var(--fog);
+    border-radius: 6px;
+    background: var(--cream);
+  }
+  .index-card-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 6px;
+  }
+  .index-card-score {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--moss);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .index-card-bar {
+    height: 3px;
+    background: var(--fog);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+  }
+  .index-card-bar-fill {
+    height: 100%;
+    background: var(--moss);
+    border-radius: 2px;
+    transition: width 1s ease;
+  }
+
+  .diagnostic-block {
+    padding: 28px 32px;
+    background: var(--fog);
+    border-radius: 6px;
+    margin-bottom: 16px;
+  }
+  .diagnostic-block h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--moss);
+    margin-bottom: 10px;
+  }
+  .diagnostic-block p {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  .footer-brand {
+    text-align: center;
+    padding: 32px 40px;
+    background: var(--ink);
+    font-size: 12px;
+    color: var(--sage);
+    letter-spacing: 0.06em;
+  }
+  .footer-brand strong { color: var(--gold); font-weight: 400; }
+
+  .status-msg {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--lichen);
+  }
+
+  @media (max-width: 640px) {
+    .site-header, .intro-block, .audit-section, .submit-section, #results-panel { padding: 28px 20px; }
+    .progress-container { padding: 12px 20px; }
+    .section-num { font-size: 36px; }
+    .scale-buttons { gap: 3px; }
+    .scale-btn { width: 30px; height: 30px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-eyebrow">Rinki Ohen Conseil · Ecosystem Intelligence Audit™</div>
+  <h1 class="header-title">Audit d'entrée<br><em>Organisation vivante</em></h1>
+  <p class="header-sub">Diagnostic structurel complet · Marceline Le Gaufey · rinkiohenconseil.com</p>
+  <div class="header-meta">
+    <div class="meta-item"><span class="meta-label">Sections</span><span class="meta-value">5</span></div>
+    <div class="meta-item"><span class="meta-label">Questions</span><span class="meta-value">52</span></div>
+    <div class="meta-item"><span class="meta-label">Indices</span><span class="meta-value">6</span></div>
+    <div class="meta-item"><span class="meta-label">Durée estimée</span><span class="meta-value">30–45 min</span></div>
+  </div>
+</header>
+
+<!-- INTRO -->
+<div class="intro-block">
+  <h2>Vos coordonnées</h2>
+  <div class="intro-grid">
+    <div>
+      <label style="font-size:12px;color:var(--sage);display:block;margin-bottom:6px;letter-spacing:0.06em;">Nom complet *</label>
+      <input type="text" id="client_name" placeholder="Prénom Nom" required>
+    </div>
+    <div>
+      <label style="font-size:12px;color:var(--sage);display:block;margin-bottom:6px;letter-spacing:0.06em;">Email *</label>
+      <input type="email" id="client_email" placeholder="vous@organisation.com" required>
+    </div>
+    <div>
+      <label style="font-size:12px;color:var(--sage);display:block;margin-bottom:6px;letter-spacing:0.06em;">Organisation *</label>
+      <input type="text" id="client_org" placeholder="Nom de votre organisation" required>
+    </div>
+    <div>
+      <label style="font-size:12px;color:var(--sage);display:block;margin-bottom:6px;letter-spacing:0.06em;">Rôle</label>
+      <input type="text" id="client_role" placeholder="CEO, DG, Fondateur·trice…">
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-container">
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+  <span class="progress-label" id="progressLabel">0 / 52 réponses</span>
+</div>
+
+<form id="auditForm">
+
+<!-- ═══ SECTION 1 ═══ -->
+<div class="audit-section">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-title-group">
+      <h2 class="section-title">Raison d'être, Identité & Data</h2>
+      <div class="section-sub">Ce qui ne change pas quand tout change — et comment c'est mesuré</div>
+      <div class="section-reveal">Cette section révèle la cohérence entre ce que l'organisation dit être et ce qu'elle fait réellement — et si cette cohérence est mesurée, intuitive, ou invisible.</div>
+    </div>
+  </div>
+
+  <div class="subsection-title">Identité & Sens</div>
+
+  <div class="question" data-section="1">
+    <div class="question-header">
+      <span class="q-num">1</span>
+      <span class="q-text">En une phrase, quelle est la raison d'être de votre organisation — non pas ce qu'elle fait, mais pourquoi elle existe ?</span>
+    </div>
+    <div class="q-hint">Distingue le 'quoi' (produit/service) du 'pourquoi' (sens). Beaucoup ne savent pas répondre sans hésiter.</div>
+    <div class="q-indices"><span class="q-index-tag">Cohérence</span></div>
+    <div class="field-wrap"><textarea data-q="s1q1" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div>
+  </div>
+
+  <div class="question" data-section="1">
+    <div class="question-header">
+      <span class="q-num">2</span>
+      <span class="q-text">Si vous demandiez à 5 personnes différentes dans votre organisation de formuler cette raison d'être, obtiendriez-vous 5 réponses convergentes ?</span>
+    </div>
+    <div class="q-hint">Mesure la diffusion réelle du sens — pas la version officielle, mais ce qui est vécu.</div>
+    <div class="q-indices"><span class="q-index-tag">Cohérence</span></div>
+    <div class="field-wrap">
+      <div class="scale-wrap">
+        <span class="scale-label">Pas du tout</span>
+        <div class="scale-buttons" id="scale_s1q2"></div>
+        <span class="scale-label">Totalement</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="question" data-section="1">
+    <div class="question-header">
+      <span class="q-num">3</span>
+      <span class="q-text">Quelles sont les 3 valeurs non-négociables de votre organisation — celles que vous ne sacrifieriez pas même sous pression économique ?</span>
+    </div>
+    <div class="q-hint">Teste la solidité des racines. Les valeurs 'sous pression' sont les vraies valeurs.</div>
+    <div class="q-indices"><span class="q-index-tag">Cohérence</span></div>
+    <div class="field-wrap"><textarea data-q="s1q3" placeholder="1. …  2. …  3. …" oninput="trackProgress(this)"></textarea></div>
+  </div>
+
+  <div class="question" data-section="1">
+    <div class="question-header">
+      <span class="q-num">4</span>
+      <span class="q-text">Dans quelle mesure les décisions stratégiques des 12 derniers mois reflètent-elles ces valeurs ?</span>
+    </div>
+    <div class="q-hint">Le vrai test de cohérence : ce qu'on décide quand c'est difficile.</div>
+    <div class="q-indices"><span class="q-index-tag">Cohérence</span></div>
+    <div class="field-wrap">
+      <div class="scale-wrap">
+        <span class="scale-label">Pas du tout</span>
+        <div class="scale-buttons" id="scale_s1q4"></div>
+        <span class="scale-label">Totalement</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="question" data-section="1">
+    <div class="question-header">
+      <span class="q-num">5</span>
+      <span class="q-text">Y a-t-il une tension visible entre ce que l'organisation affirme être et ce qu'elle fait au quotidien ? Si oui, où se manifeste-t-elle ?</span>
+    </div>
+    <div class="q-hint">La question la plus révélatrice de la section.</div>
+    <div class="q-indices"><span class="q-index-tag">Cohérence</span></div>
+    <div class="field-wrap"><textarea data-q="s1q5" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div>
+  </div>
+
+  <div class="question" data-section="1">
+    <div class="question-header">
+      <span class="q-num">6</span>
+      <span class="q-text">Dans 5 ans, qu'est-ce qui doit absolument avoir changé dans votre organisation ? Et qu'est-ce qui doit absolument rester intact ?</span>
+    </div>
+    <div class="q-hint">Distingue ce qui est racine (invariant) de ce qui est branche (évolutif).</div>
+    <div class="q-indices"><span class="q-index-tag">Cohérence</span><span class="q-index-tag">Adaptabilité</span></div>
+    <div class="field-wrap"><textarea data-q="s1q6" placeholder="Ce qui doit changer : …  Ce qui doit rester : …" oninput="trackProgress(this)"></textarea></div>
+  </div>
+
+  <div class="subsection-title">Data & Systèmes de mesure</div>
+
+  <div class="question" data-section="1">
+    <div class="question-header">
+      <span class="q-num">7</span>
+      <span class="q-text">Mesurez-vous actuellement l'alignement entre votre raison d'être et vos opérations quotidiennes ?</span>
+    </div>
+    <div class="q-hint">Ex : Notion · Google Forms · Lattice · aucun outil formel</div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Cohérence</span></div>
+    <div class="field-wrap">
+      <div class="radio-group" id="radio_s1q7" style="margin-bottom:10px;"></div>
+      <textarea data-q="s1q7_detail" placeholder="Si oui : quels indicateurs, quels outils ? Si non : c'est suivi informellement ou absent ?" oninput="trackProgress(this)"></textarea>
+    </div>
+  </div>
+
+  <div class="question" data-section="1">
+    <div class="question-header">
+      <span class="q-num">8</span>
+      <span class="q-text">Collectez-vous des données sur l'engagement et le sentiment d'appartenance de vos équipes ?</span>
+    </div>
+    <div class="q-hint">Ex : Culture Amp · Officevibe · Typeform · entretiens manuels · rien de formel</div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Vitalité humaine</span></div>
+    <div class="field-wrap">
+      <div class="radio-group" id="radio_s1q8" style="margin-bottom:10px;"></div>
+      <textarea data-q="s1q8_detail" placeholder="Canaux, fréquence, outils… ou comment percevez-vous l'engagement actuellement ?" oninput="trackProgress(this)"></textarea>
+    </div>
+  </div>
+
+  <div class="question" data-section="1">
+    <div class="question-header">
+      <span class="q-num">9</span>
+      <span class="q-text">Ces données, une fois collectées, produisent-elles des décisions visibles et traçables — ou restent-elles dans des rapports que personne ne relit ?</span>
+    </div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Cohérence</span><span class="q-index-tag">Circulation</span></div>
+    <div class="field-wrap">
+      <div class="scale-wrap" style="margin-bottom:10px;">
+        <span class="scale-label">Rapports non relus</span>
+        <div class="scale-buttons" id="scale_s1q9"></div>
+        <span class="scale-label">Décisions traçables</span>
+      </div>
+      <textarea data-q="s1q9_detail" placeholder="Précisez si souhaité…" oninput="trackProgress(this)"></textarea>
+    </div>
+  </div>
+
+  <div class="question" data-section="1">
+    <div class="question-header">
+      <span class="q-num">10</span>
+      <span class="q-text">Y a-t-il des dimensions importantes de la vie de votre organisation — culture, cohésion, sens — dont vous savez qu'elles ne sont pas mesurées, et que vous aimeriez pouvoir suivre ?</span>
+    </div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Régénération</span></div>
+    <div class="field-wrap"><textarea data-q="s1q10" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 2 ═══ -->
+<div class="audit-section">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-title-group">
+      <h2 class="section-title">Structure hiérarchique, Gouvernance & Data</h2>
+      <div class="section-sub">Comment les décisions circulent, qui détient quoi — et comment c'est mesuré</div>
+      <div class="section-reveal">La santé du tronc organisationnel — comment les ressources, les décisions et l'autorité circulent réellement. Un tronc qui étouffe les branches tue l'adaptabilité.</div>
+    </div>
+  </div>
+
+  <div class="subsection-title">Structure & Circulation décisionnelle</div>
+
+  <div class="question"><div class="question-header"><span class="q-num">1</span><span class="q-text">Décrivez votre structure hiérarchique — combien de niveaux, comment sont-ils organisés, et quel est l'effectif total ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Circulation</span></div>
+    <div class="field-wrap"><textarea data-q="s2q1" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">2</span><span class="q-text">Estimez le pourcentage de décisions quotidiennes qui nécessitent une validation managériale avant d'être exécutées.</span></div>
+    <div class="q-indices"><span class="q-index-tag">Circulation</span><span class="q-index-tag">Adaptabilité</span></div>
+    <div class="field-wrap"><input type="text" data-q="s2q2" placeholder="Ex : environ 60%" oninput="trackProgress(this)"></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">3</span><span class="q-text">Qui a le droit de décider quoi, sans demander la permission ? Est-ce formalisé quelque part ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Circulation</span></div>
+    <div class="field-wrap">
+      <div class="radio-group" id="radio_s2q3" style="margin-bottom:10px;"></div>
+      <textarea data-q="s2q3_detail" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">4</span><span class="q-text">Combien de temps s'écoule en moyenne entre l'identification d'un problème terrain et une décision de correction ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Circulation</span><span class="q-index-tag">Résilience</span></div>
+    <div class="field-wrap"><input type="text" data-q="s2q4" placeholder="Ex : 2–3 semaines" oninput="trackProgress(this)"></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">5</span><span class="q-text">Y a-t-il des personnes ou des équipes qui concentrent un pouvoir décisionnel disproportionné — créant des goulots d'étranglement ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Circulation</span></div>
+    <div class="field-wrap">
+      <div class="radio-group" id="radio_s2q5" style="margin-bottom:10px;"></div>
+      <textarea data-q="s2q5_detail" placeholder="Précisez si souhaité…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="subsection-title">Espaces d'échange & Écoute</div>
+
+  <div class="question"><div class="question-header"><span class="q-num">6</span><span class="q-text">Quels sont les espaces formels par lesquels vos équipes s'expriment — surveys, réunions régulières, entretiens individuels, cercles de parole ? Ces retours produisent-ils des changements visibles ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Circulation</span><span class="q-index-tag">Vitalité humaine</span></div>
+    <div class="field-wrap">
+      <textarea data-q="s2q6" placeholder="Listez les canaux, leur fréquence, et si les retours donnent lieu à des actions documentées…" oninput="trackProgress(this)"></textarea>
+      <div class="scale-wrap" style="margin-top:10px;">
+        <span class="scale-label">Pas de changement</span>
+        <div class="scale-buttons" id="scale_s2q6"></div>
+        <span class="scale-label">Changements traçables</span>
+      </div>
+    </div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">7</span><span class="q-text">Les équipes de terrain ont-elles leur mot à dire dans les décisions qui les concernent directement ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Circulation</span><span class="q-index-tag">Vitalité humaine</span></div>
+    <div class="field-wrap"><div class="scale-wrap"><span class="scale-label">Jamais</span><div class="scale-buttons" id="scale_s2q7"></div><span class="scale-label">Toujours</span></div></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">8</span><span class="q-text">Comment les désaccords stratégiques sont-ils traités — existe-t-il un protocole formel pour les exprimer et les résoudre ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Résilience</span><span class="q-index-tag">Vitalité humaine</span></div>
+    <div class="field-wrap">
+      <div class="radio-group" id="radio_s2q8" style="margin-bottom:10px;"></div>
+      <textarea data-q="s2q8_detail" placeholder="Décrivez le protocole ou la pratique informelle…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">9</span><span class="q-text">Votre organisation a-t-elle connu des restructurations hiérarchiques ces 3 dernières années ? Qu'est-ce que ça a produit concrètement ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Adaptabilité</span><span class="q-index-tag">Résilience</span></div>
+    <div class="field-wrap">
+      <div class="radio-group" id="radio_s2q9" style="margin-bottom:10px;"></div>
+      <textarea data-q="s2q9_detail" placeholder="Ce que ça a produit concrètement…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="subsection-title">Data & Outils de gouvernance</div>
+
+  <div class="question"><div class="question-header"><span class="q-num">10</span><span class="q-text">Utilisez-vous des outils pour suivre et piloter vos rituels de gouvernance — comités, revues stratégiques, OKRs, tableaux de bord décisionnels ?</span></div>
+    <div class="q-hint">Ex : Notion · Asana · Monday · Confluence · Google Sheets · aucun outil formel</div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Circulation</span></div>
+    <div class="field-wrap">
+      <div class="radio-group" id="radio_s2q10" style="margin-bottom:10px;"></div>
+      <textarea data-q="s2q10_detail" placeholder="Lesquels, à quelle fréquence ?" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">11</span><span class="q-text">Mesurez-vous la vitesse et la qualité de vos prises de décision — délais, taux d'exécution, taux de révision ?</span></div>
+    <div class="q-hint">Ex : tableaux de bord internes · OKR tracking · Power BI · intuition managériale</div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Circulation</span><span class="q-index-tag">Adaptabilité</span></div>
+    <div class="field-wrap">
+      <div class="radio-group" id="radio_s2q11" style="margin-bottom:10px;"></div>
+      <textarea data-q="s2q11_detail" placeholder="Comment et avec quels outils ? Ou comment évaluez-vous l'efficacité ?" oninput="trackProgress(this)"></textarea></div></div>
+</div>
+
+<!-- ═══ SECTION 3 ═══ -->
+<div class="audit-section">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-title-group">
+      <h2 class="section-title">Ressources humaines, Talents & Vitalité</h2>
+      <div class="section-sub">Les habitants de l'écosystème — leur énergie, leur mobilité, leurs connexions</div>
+      <div class="section-reveal">La santé humaine réelle de l'organisation — au-delà des organigrammes. Un écosystème vivant mobilise ses talents selon leurs compétences réelles et régénère l'énergie plutôt que de l'extraire.</div>
+    </div>
+  </div>
+
+  <div class="subsection-title">Composition & Données démographiques</div>
+
+  <div class="question"><div class="question-header"><span class="q-num">1</span><span class="q-text">Comment décririez-vous la composition de votre organisation ? (démographie, diversité des profils, ancienneté)</span></div>
+    <div class="q-hint">Répartition H/F, tranches d'âge, diversité des parcours, ratio nouveaux/anciens. Ces données sont-elles formellement suivies ?</div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Vitalité humaine</span></div>
+    <div class="field-wrap"><textarea data-q="s3q1" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">2</span><span class="q-text">Les talents de votre organisation sont-ils mobilisés selon leurs vraies compétences — ou selon les cases disponibles dans l'organigramme ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Vitalité humaine</span><span class="q-index-tag">Circulation</span></div>
+    <div class="field-wrap">
+      <div class="scale-wrap" style="margin-bottom:10px;"><span class="scale-label">Cases d'organigramme</span><div class="scale-buttons" id="scale_s3q2"></div><span class="scale-label">Vraies compétences</span></div>
+      <textarea data-q="s3q2_detail" placeholder="Précisez si souhaité…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">3</span><span class="q-text">Quel est votre taux de turnover sur les 12 derniers mois — et combien de temps s'écoule entre le départ d'un talent et son remplacement opérationnel ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Résilience</span><span class="q-index-tag">Vitalité humaine</span></div>
+    <div class="field-wrap"><input type="text" data-q="s3q3" placeholder="Ex : ~15% / 3 mois de délai moyen" oninput="trackProgress(this)"></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">4</span><span class="q-text">Connaissez-vous les raisons réelles pour lesquelles vos talents partent — au-delà des réponses de façade données en entretien de sortie ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Vitalité humaine</span><span class="q-index-tag">Régénération</span></div>
+    <div class="field-wrap">
+      <div class="radio-group" id="radio_s3q4" style="margin-bottom:10px;"></div>
+      <textarea data-q="s3q4_detail" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">5</span><span class="q-text">Y a-t-il des personnes dont vous savez qu'elles sont sous-utilisées — des talents invisibles qui portent plus que ce que leur rôle leur permet d'exprimer ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Vitalité humaine</span><span class="q-index-tag">Circulation</span></div>
+    <div class="field-wrap"><textarea data-q="s3q5" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="subsection-title">Énergie, Engagement & Régénération</div>
+
+  <div class="question"><div class="question-header"><span class="q-num">6</span><span class="q-text">Comment décririez-vous l'état d'énergie général de vos équipes en ce moment ?</span></div>
+    <div class="q-hint">Ex : pulse surveys · 1:1 managériaux · baromètre annuel · observation directe · rien de formel</div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Vitalité humaine</span><span class="q-index-tag">Régénération</span></div>
+    <div class="field-wrap">
+      <div class="energy-group" id="energy_s3q6" style="margin-bottom:10px;">
+        <button type="button" class="energy-btn" onclick="selectEnergy('energy_s3q6', 'En expansion', this)">En expansion</button>
+        <button type="button" class="energy-btn" onclick="selectEnergy('energy_s3q6', 'Stable', this)">Stable</button>
+        <button type="button" class="energy-btn" onclick="selectEnergy('energy_s3q6', 'En épuisement', this)">En épuisement</button>
+      </div>
+      <textarea data-q="s3q6_detail" placeholder="Comment mesurez-vous cet état — ou sur quoi basez-vous votre perception ?" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">7</span><span class="q-text">Votre organisation crée-t-elle des conditions de régénération — temps de récupération, espaces de réflexion, droit à l'erreur, congés réellement pris ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Régénération</span><span class="q-index-tag">Vitalité humaine</span></div>
+    <div class="field-wrap">
+      <div class="scale-wrap" style="margin-bottom:10px;"><span class="scale-label">Pas du tout</span><div class="scale-buttons" id="scale_s3q7"></div><span class="scale-label">Systématiquement</span></div>
+      <textarea data-q="s3q7_detail" placeholder="Précisez si souhaité…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">8</span><span class="q-text">Les initiatives spontanées — idées non sollicitées, projets lancés sans validation — sont-elles encouragées ou freinées dans votre organisation ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Adaptabilité</span><span class="q-index-tag">Vitalité humaine</span></div>
+    <div class="field-wrap">
+      <div class="scale-wrap" style="margin-bottom:10px;"><span class="scale-label">Freinées</span><div class="scale-buttons" id="scale_s3q8"></div><span class="scale-label">Encouragées</span></div>
+      <textarea data-q="s3q8_detail" placeholder="Un exemple concret…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="subsection-title">Outils RH & Systèmes de gestion des talents</div>
+
+  <div class="question"><div class="question-header"><span class="q-num">9</span><span class="q-text">Quels outils RH utilisez-vous pour gérer, évaluer et développer vos talents ?</span></div>
+    <div class="q-hint">Ex : 9-Box · entretiens annuels · 360° feedback · Workday · BambooHR · Lucca · Leapsome · aucun</div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Vitalité humaine</span></div>
+    <div class="field-wrap"><textarea data-q="s3q9" placeholder="Listez les outils, leur fréquence d'utilisation, et par qui…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">10</span><span class="q-text">Disposez-vous d'un système de suivi des compétences et des trajectoires individuelles — est-il réellement alimenté et consulté ?</span></div>
+    <div class="q-hint">Ex : SIRH dédié · Notion/Excel · cartographie manuelle · aucun système formel</div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Vitalité humaine</span><span class="q-index-tag">Régénération</span></div>
+    <div class="field-wrap">
+      <div class="radio-group" id="radio_s3q10" style="margin-bottom:10px;"></div>
+      <textarea data-q="s3q10_detail" placeholder="Si non : comment identifiez-vous les compétences disponibles et les besoins à venir ?" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">11</span><span class="q-text">Y a-t-il des données RH que vous aimeriez avoir et que vous n'avez pas — sur les compétences, la mobilité interne, le bien-être, ou autre ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Régénération</span></div>
+    <div class="field-wrap"><textarea data-q="s3q11" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div></div>
+</div>
+
+<!-- ═══ SECTION 4 ═══ -->
+<div class="audit-section">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-title-group">
+      <h2 class="section-title">Processus, Systèmes & Flux opérationnels</h2>
+      <div class="section-sub">Comment le travail circule réellement — et ce qui le freine ou l'accélère</div>
+      <div class="section-reveal">La qualité des flux opérationnels — là où la valeur se crée, se bloque ou se perd. Un processus vivant s'adapte au contexte ; un processus mort le contraint.</div>
+    </div>
+  </div>
+
+  <div class="subsection-title">Processus & Flux de travail</div>
+
+  <div class="question"><div class="question-header"><span class="q-num">1</span><span class="q-text">Quels sont les 3 processus les plus critiques de votre organisation — ceux dont l'interruption aurait l'impact le plus immédiat ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Résilience</span><span class="q-index-tag">Circulation</span></div>
+    <div class="field-wrap"><textarea data-q="s4q1" placeholder="1. …  2. …  3. …" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">2</span><span class="q-text">Ces processus sont-ils documentés, connus de tous, et réellement suivis — ou vivent-ils dans les têtes de quelques personnes clés ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Résilience</span><span class="q-index-tag">Régénération</span></div>
+    <div class="field-wrap">
+      <div class="scale-wrap" style="margin-bottom:10px;"><span class="scale-label">Dans les têtes</span><div class="scale-buttons" id="scale_s4q2"></div><span class="scale-label">Documentés & partagés</span></div>
+      <textarea data-q="s4q2_detail" placeholder="Précisez si souhaité…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">3</span><span class="q-text">Où se situent les principales frictions dans vos flux opérationnels — les endroits où le travail ralentit, se bloque, ou se perd systématiquement ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Circulation</span><span class="q-index-tag">Adaptabilité</span></div>
+    <div class="field-wrap"><textarea data-q="s4q3" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">4</span><span class="q-text">Vos processus sont-ils revus et mis à jour régulièrement — ou restent-ils en place jusqu'à ce qu'ils créent une crise ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Adaptabilité</span><span class="q-index-tag">Régénération</span></div>
+    <div class="field-wrap">
+      <div class="scale-wrap" style="margin-bottom:10px;"><span class="scale-label">Jusqu'à la crise</span><div class="scale-buttons" id="scale_s4q4"></div><span class="scale-label">Revus régulièrement</span></div>
+      <input type="text" data-q="s4q4_freq" placeholder="Fréquence de révision…" oninput="trackProgress(this)" style="margin-top:8px;"></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">5</span><span class="q-text">Lorsqu'un processus dysfonctionne, comment l'organisation le détecte-t-elle et le corrige-t-elle — proactivement ou en réaction à une crise ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Circulation</span><span class="q-index-tag">Adaptabilité</span></div>
+    <div class="field-wrap"><textarea data-q="s4q5" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="subsection-title">Systèmes & Stack technologique</div>
+
+  <div class="question"><div class="question-header"><span class="q-num">6</span><span class="q-text">Quels sont les principaux outils et logiciels utilisés dans votre organisation pour faire fonctionner les opérations au quotidien ?</span></div>
+    <div class="q-hint">Ex — Communication : Slack, Teams · Projet : Asana, Notion · CRM : Salesforce, HubSpot · Finance : Sage, Pennylane · Data : Power BI</div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Circulation</span></div>
+    <div class="field-wrap"><textarea data-q="s4q6" placeholder="Listez par grande fonction…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">7</span><span class="q-text">Ces outils communiquent-ils entre eux — ou chaque équipe travaille-t-elle dans son propre silo technologique ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Circulation</span></div>
+    <div class="field-wrap">
+      <div class="scale-wrap" style="margin-bottom:10px;"><span class="scale-label">Silos complets</span><div class="scale-buttons" id="scale_s4q7"></div><span class="scale-label">Intégrations fluides</span></div>
+      <textarea data-q="s4q7_detail" placeholder="Intégrations en place, ou ressaisie manuelle ?" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">8</span><span class="q-text">Avez-vous un tableau de bord opérationnel consolidé — un endroit où l'état de santé global de votre activité est visible en temps réel ?</span></div>
+    <div class="q-hint">Ex : Power BI · Tableau · Google Data Studio · dashboard Excel · aucun tableau consolidé</div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Circulation</span><span class="q-index-tag">Cohérence</span></div>
+    <div class="field-wrap">
+      <div class="radio-group" id="radio_s4q8" style="margin-bottom:10px;"></div>
+      <textarea data-q="s4q8_detail" placeholder="Qui y a accès, fréquence de consultation, quelles décisions produit-il ?" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="subsection-title">Apprentissage opérationnel & Mémoire des processus</div>
+
+  <div class="question"><div class="question-header"><span class="q-num">9</span><span class="q-text">Quand un projet échoue ou qu'un processus produit un résultat inattendu, existe-t-il un mécanisme formel pour en tirer des enseignements collectifs ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Régénération</span><span class="q-index-tag">Adaptabilité</span></div>
+    <div class="field-wrap">
+      <div class="radio-group" id="radio_s4q9" style="margin-bottom:10px;"></div>
+      <textarea data-q="s4q9_detail" placeholder="Décrivez le mécanisme, ou son absence…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">10</span><span class="q-text">Y a-t-il des processus ou des systèmes que vous savez obsolètes — que vous maintenez par inertie ou par manque de ressources pour les changer ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Adaptabilité</span><span class="q-index-tag">Résilience</span></div>
+    <div class="field-wrap"><textarea data-q="s4q10" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div></div>
+</div>
+
+<!-- ═══ SECTION 5 ═══ -->
+<div class="audit-section">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div class="section-title-group">
+      <h2 class="section-title">Structure financière & Flux de valeur</h2>
+      <div class="section-sub">Comment la valeur est créée, distribuée et régénérée — la sève de l'écosystème</div>
+      <div class="section-reveal">La santé financière d'un écosystème vivant ne se mesure pas uniquement à sa rentabilité instantanée — mais à sa capacité à créer de la valeur durablement, à la distribuer équitablement, et à réinvestir dans sa propre régénération.</div>
+    </div>
+  </div>
+
+  <div class="subsection-title">Création & Distribution de valeur</div>
+
+  <div class="question"><div class="question-header"><span class="q-num">1</span><span class="q-text">Comment votre organisation génère-t-elle de la valeur — quelles sont vos principales sources de revenus et leur poids relatif ?</span></div>
+    <div class="q-hint">Ex : produits, services, abonnements, licences, partenariats — et leur part respective dans le CA.</div>
+    <div class="q-indices"><span class="q-index-tag">Résilience</span></div>
+    <div class="field-wrap"><textarea data-q="s5q1" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">2</span><span class="q-text">Quelle est la trajectoire de votre chiffre d'affaires sur les 3 dernières années — et cette trajectoire reflète-t-elle la santé réelle ou masque-t-elle des fragilités ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Résilience</span><span class="q-index-tag">Cohérence</span></div>
+    <div class="field-wrap"><textarea data-q="s5q2" placeholder="Chiffres si vous souhaitez les partager, et votre lecture de la trajectoire…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">3</span><span class="q-text">Quelle part de vos revenus est récurrente — prévisible et stable — versus ponctuelle ou dépendante de quelques clients ou contrats majeurs ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Résilience</span><span class="q-index-tag">Adaptabilité</span></div>
+    <div class="field-wrap"><input type="text" data-q="s5q3" placeholder="Ex : ~40% récurrent / 60% projets ponctuels" oninput="trackProgress(this)"></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">4</span><span class="q-text">Comment la valeur créée est-elle distribuée dans l'organisation — entre actionnaires, direction, équipes, et réinvestissement ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Cohérence</span><span class="q-index-tag">Vitalité humaine</span></div>
+    <div class="field-wrap"><textarea data-q="s5q4" placeholder="% si disponibles, ou description de la logique de distribution…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="subsection-title">Investissement & Régénération</div>
+
+  <div class="question"><div class="question-header"><span class="q-num">5</span><span class="q-text">Quelle part de vos ressources est investie dans le développement des compétences, l'innovation, et la régénération de l'organisation elle-même ?</span></div>
+    <div class="q-hint">Formation, R&D, expérimentations, bien-être des équipes, transformation organisationnelle.</div>
+    <div class="q-indices"><span class="q-index-tag">Régénération</span><span class="q-index-tag">Adaptabilité</span></div>
+    <div class="field-wrap"><input type="text" data-q="s5q5" placeholder="Ex : ~5% du budget total" oninput="trackProgress(this)"></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">6</span><span class="q-text">Votre organisation dispose-t-elle d'une réserve de trésorerie suffisante pour absorber un choc inattendu — perte d'un client majeur, crise sectorielle, départ clé ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Résilience</span></div>
+    <div class="field-wrap"><input type="text" data-q="s5q6" placeholder="Ex : environ 4 mois de trésorerie" oninput="trackProgress(this)"></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">7</span><span class="q-text">Y a-t-il des investissements que vous différez depuis longtemps — technologie, formation, recrutement — parce que la pression court-terme ne laisse pas de place au long-terme ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Régénération</span><span class="q-index-tag">Adaptabilité</span></div>
+    <div class="field-wrap"><textarea data-q="s5q7" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="subsection-title">Pilotage financier & Data</div>
+
+  <div class="question"><div class="question-header"><span class="q-num">8</span><span class="q-text">Quels outils utilisez-vous pour piloter votre performance financière au quotidien — comptabilité, trésorerie, reporting, prévisions ?</span></div>
+    <div class="q-hint">Ex : Pennylane · Sage · QuickBooks · Xero · Excel · Power BI · expert-comptable externe</div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Circulation</span></div>
+    <div class="field-wrap"><textarea data-q="s5q8" placeholder="Outils, fréquence de consultation, qui produit et qui consulte ces données…" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">9</span><span class="q-text">Au-delà des indicateurs financiers classiques, mesurez-vous d'autres formes de valeur créée — impact social, satisfaction client, valeur perçue par les équipes ?</span></div>
+    <div class="q-hint">Ex : NPS client · bilan carbone · indicateurs RSE · impact reporting · aucun indicateur non-financier</div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Cohérence</span><span class="q-index-tag">Régénération</span></div>
+    <div class="field-wrap">
+      <div class="radio-group" id="radio_s5q9" style="margin-bottom:10px;"></div>
+      <textarea data-q="s5q9_detail" placeholder="Quels indicateurs, quels outils, comment intégrés dans les décisions ?" oninput="trackProgress(this)"></textarea></div></div>
+
+  <div class="question"><div class="question-header"><span class="q-num">10</span><span class="q-text">Y a-t-il des dimensions de votre santé financière que vous ne mesurez pas aujourd'hui — et que vous aimeriez pouvoir suivre ?</span></div>
+    <div class="q-indices"><span class="q-index-tag">Maturité data</span><span class="q-index-tag">Régénération</span></div>
+    <div class="field-wrap"><textarea data-q="s5q10" placeholder="Votre réponse…" oninput="trackProgress(this)"></textarea></div></div>
+</div>
+
+<!-- SUBMIT -->
+<div class="submit-section">
+  <h2>Votre diagnostic vous attend.</h2>
+  <p>Vos résultats vous seront envoyés par email dès la soumission de l'audit.</p>
+  <button type="button" class="submit-btn" id="submitBtn" onclick="submitAudit()">Soumettre l'audit</button>
+  <p class="status-msg" id="statusMsg"></p>
+</div>
+
+</form>
+
+<!-- RESULTS -->
+<div id="results-panel">
+  <div class="results-title">Votre cartographie organisationnelle</div>
+  <p class="results-subtitle" id="results-client-name">Diagnostic initial · Ecosystem Intelligence Audit™</p>
+  <div class="chart-wrap">
+    <canvas id="radarChart"></canvas>
+  </div>
+  <div class="indices-grid" id="indicesGrid"></div>
+  <div id="diagnosticBlocks"></div>
+</div>
+
+<div class="footer-brand">
+  <strong>Rinki Ohen Conseil</strong> · Marceline Le Gaufey · rinkiohenconseil.com<br>
+  <span style="font-size:11px;opacity:0.6;">Ecosystem Intelligence Audit™ · Tous droits réservés</span>
+</div>
+
+<script>
+// ── EMAILJS INIT ─────────────────────────────────────────────
+// Remplace TA_PUBLIC_KEY par ta vraie clé après avoir régénéré
+emailjs.init("PDptbG7ioCXMnu6Bn");
+
+const SERVICE_ID   = "service_hfsc9mi";
+const TEMPLATE_ID  = "template_zk587jp";
+
+// ── SCALE BUILDERS ───────────────────────────────────────────
+const scaleIds = [
+  'scale_s1q2','scale_s1q4','scale_s1q9',
+  'scale_s2q6','scale_s2q7',
+  'scale_s3q2','scale_s3q7','scale_s3q8',
+  'scale_s4q2','scale_s4q4','scale_s4q7'
+];
+
+scaleIds.forEach(id => {
+  const wrap = document.getElementById(id);
+  if (!wrap) return;
+  for (let i = 1; i <= 10; i++) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'scale-btn';
+    btn.textContent = i;
+    btn.dataset.val = i;
+    btn.dataset.group = id;
+    btn.onclick = function() {
+      document.querySelectorAll(`[data-group="${id}"]`).forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+      updateProgress();
+    };
+    wrap.appendChild(btn);
+  }
+});
+
+// ── RADIO BUILDERS ───────────────────────────────────────────
+const radioConfigs = {
+  radio_s1q7: ['Oui','Partiel','Non'],
+  radio_s1q8: ['Oui','Partiel','Non'],
+  radio_s2q3: ['Oui','Partiel','Non'],
+  radio_s2q5: ['Oui','Partiel','Non'],
+  radio_s2q8: ['Oui','Partiel','Non'],
+  radio_s2q9: ['Oui','Non'],
+  radio_s2q10: ['Oui','Partiel','Non'],
+  radio_s2q11: ['Oui','Partiel','Non'],
+  radio_s3q4: ['Oui','Partiellement','Non'],
+  radio_s3q10: ['Oui','Partiel','Non'],
+  radio_s4q8: ['Oui','Partiel','Non'],
+  radio_s4q9: ['Oui','Partiel','Non'],
+  radio_s5q9: ['Oui','Partiel','Non'],
+};
+
+Object.entries(radioConfigs).forEach(([id, opts]) => {
+  const wrap = document.getElementById(id);
+  if (!wrap) return;
+  opts.forEach(opt => {
+    const label = document.createElement('label');
+    label.className = 'radio-option';
+    label.innerHTML = `<input type="radio" name="${id}" value="${opt}">${opt}`;
+    label.querySelector('input').addEventListener('change', function() {
+      wrap.querySelectorAll('.radio-option').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      updateProgress();
+    });
+    wrap.appendChild(label);
+  });
+});
+
+// ── ENERGY SELECT ────────────────────────────────────────────
+function selectEnergy(groupId, val, btn) {
+  document.querySelectorAll(`#${groupId} .energy-btn`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  btn.dataset.val = val;
+  updateProgress();
+}
+
+// ── PROGRESS ─────────────────────────────────────────────────
+function updateProgress() {
+  const total = 52;
+  let filled = 0;
+  document.querySelectorAll('textarea, input[type="text"]').forEach(el => {
+    if (el.value.trim()) filled++;
+  });
+  scaleIds.forEach(id => {
+    if (document.querySelector(`[data-group="${id}"].selected`)) filled++;
+  });
+  Object.keys(radioConfigs).forEach(id => {
+    if (document.querySelector(`#${id} .radio-option.selected`)) filled++;
+  });
+  const energy = document.querySelector('#energy_s3q6 .energy-btn.selected');
+  if (energy) filled++;
+
+  const pct = Math.min(100, Math.round((filled / total) * 100));
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${Math.min(filled, total)} / ${total} réponses`;
+}
+
+function trackProgress(el) { updateProgress(); }
+
+// ── COLLECT ALL DATA ──────────────────────────────────────────
+function collectData() {
+  const data = {};
+
+  document.querySelectorAll('[data-q]').forEach(el => {
+    data[el.dataset.q] = el.value.trim();
+  });
+
+  scaleIds.forEach(id => {
+    const sel = document.querySelector(`[data-group="${id}"].selected`);
+    data[id] = sel ? parseInt(sel.dataset.val) : null;
+  });
+
+  Object.keys(radioConfigs).forEach(id => {
+    const sel = document.querySelector(`#${id} .radio-option.selected input`);
+    data[id] = sel ? sel.value : null;
+  });
+
+  const energy = document.querySelector('#energy_s3q6 .energy-btn.selected');
+  data['energy_s3q6'] = energy ? energy.dataset.val : null;
+
+  return data;
+}
+
+// ── SCORING ───────────────────────────────────────────────────
+function radioScore(val) {
+  if (!val) return 5;
+  if (val === 'Oui') return 9;
+  if (val === 'Partiel' || val === 'Partiellement') return 5;
+  return 2;
+}
+
+function scaleVal(data, key) {
+  return data[key] || 5;
+}
+
+function computeIndices(data) {
+  const coherence = (
+    scaleVal(data,'scale_s1q2') +
+    scaleVal(data,'scale_s1q4') +
+    scaleVal(data,'scale_s1q9') +
+    (data['s1q1'] ? 7 : 3) +
+    (data['s1q5'] ? 6 : 3)
+  ) / 5;
+
+  const circulation = (
+    scaleVal(data,'scale_s2q6') +
+    scaleVal(data,'scale_s2q7') +
+    scaleVal(data,'scale_s4q7') +
+    radioScore(data['radio_s2q5']) +
+    (data['s2q4'] ? 6 : 3)
+  ) / 5;
+
+  const resilience = (
+    (data['s5q6'] ? 7 : 3) +
+    radioScore(data['radio_s4q9']) +
+    scaleVal(data,'scale_s4q2') +
+    (data['s5q3'] ? 6 : 3) +
+    (data['s3q3'] ? 5 : 3)
+  ) / 5;
+
+  const vitalite = (
+    scaleVal(data,'scale_s3q2') +
+    scaleVal(data,'scale_s3q7') +
+    scaleVal(data,'scale_s3q8') +
+    radioScore(data['radio_s3q4']) +
+    (data['energy_s3q6'] === 'En expansion' ? 9 : data['energy_s3q6'] === 'Stable' ? 5 : 2)
+  ) / 5;
+
+  const adaptabilite = (
+    scaleVal(data,'scale_s4q4') +
+    radioScore(data['radio_s2q9']) +
+    (data['s4q3'] ? 6 : 3) +
+    (data['s5q7'] ? 5 : 3) +
+    scaleVal(data,'scale_s3q8')
+  ) / 5;
+
+  const regeneration = (
+    scaleVal(data,'scale_s3q7') +
+    radioScore(data['radio_s4q9']) +
+    (data['s5q5'] ? 7 : 2) +
+    (data['s1q10'] ? 6 : 3) +
+    (data['s5q7'] ? 5 : 3)
+  ) / 5;
+
+  return {
+    'Cohérence':       Math.round(Math.min(10, Math.max(1, coherence))),
+    'Circulation':     Math.round(Math.min(10, Math.max(1, circulation))),
+    'Résilience':      Math.round(Math.min(10, Math.max(1, resilience))),
+    'Vitalité humaine':Math.round(Math.min(10, Math.max(1, vitalite))),
+    'Adaptabilité':    Math.round(Math.min(10, Math.max(1, adaptabilite))),
+    'Régénération':    Math.round(Math.min(10, Math.max(1, regeneration))),
+  };
+}
+
+// ── DIAGNOSTIC TEXT ───────────────────────────────────────────
+function generateDiagnostic(indices) {
+  const scores = Object.values(indices);
+  const avg = scores.reduce((a,b) => a+b, 0) / scores.length;
+  const minKey = Object.keys(indices).reduce((a,b) => indices[a] < indices[b] ? a : b);
+  const maxKey = Object.keys(indices).reduce((a,b) => indices[a] > indices[b] ? a : b);
+
+  let level = avg >= 7.5 ? 'robuste' : avg >= 5 ? 'en transition' : 'fragilisé';
+
+  return [
+    {
+      title: `Écosystème ${level}`,
+      text: `Score moyen : ${avg.toFixed(1)}/10. ${
+        avg >= 7.5
+          ? "Votre organisation présente des fondations solides. Les prochains leviers de croissance résident dans l'optimisation des zones de friction résiduelles."
+          : avg >= 5
+          ? "Votre organisation est fonctionnelle mais porte des tensions structurelles qui limitent son potentiel. Un travail ciblé sur les variables lentes pourrait libérer une énergie considérable."
+          : "Votre organisation fonctionne malgré des fragilités systémiques importantes. Une intervention structurée est nécessaire avant que ces tensions ne deviennent des crises."
+      }`
+    },
+    {
+      title: `Point de force : ${maxKey} (${indices[maxKey]}/10)`,
+      text: `C'est votre ancrage. Cette dimension peut servir de levier pour renforcer les autres — elle représente la vitalité déjà présente dans le système.`
+    },
+    {
+      title: `Point d'attention prioritaire : ${minKey} (${indices[minKey]}/10)`,
+      text: `C'est votre variable lente la plus sous tension. Elle agit en silence sur l'ensemble du système. Sans intervention, elle limitera l'impact de toutes les autres améliorations.`
+    },
+    {
+      title: `Prochaine étape`,
+      text: `Ces résultats sont un premier éclairage — pas un verdict. Ils ouvrent une conversation. Marceline Le Gaufey vous contactera pour approfondir ce diagnostic et définir ensemble les priorités d'intervention.`
+    }
+  ];
+}
+
+// ── BUILD RESULTS PANEL ───────────────────────────────────────
+function buildResults(indices) {
+  const name = document.getElementById('client_name').value || 'votre organisation';
+  document.getElementById('results-client-name').textContent =
+    `Diagnostic initial pour ${name} · Ecosystem Intelligence Audit™`;
+
+  // Radar chart
+  const ctx = document.getElementById('radarChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: Object.keys(indices),
+      datasets: [{
+        label: 'Vitalité organisationnelle',
+        data: Object.values(indices),
+        backgroundColor: 'rgba(61,74,53,0.15)',
+        borderColor: 'rgba(61,74,53,0.8)',
+        borderWidth: 2,
+        pointBackgroundColor: '#c4a35a',
+        pointBorderColor: '#fff',
+        pointRadius: 5,
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        r: {
+          min: 0, max: 10,
+          ticks: { stepSize: 2, font: { size: 10 }, color: '#7a8c6e' },
+          grid: { color: 'rgba(181,196,168,0.3)' },
+          angleLines: { color: 'rgba(181,196,168,0.3)' },
+          pointLabels: {
+            font: { size: 12, family: 'Inter' },
+            color: '#3d4a35'
+          }
+        }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
+
+  // Index cards
+  const grid = document.getElementById('indicesGrid');
+  grid.innerHTML = '';
+  Object.entries(indices).forEach(([label, score]) => {
+    const card = document.createElement('div');
+    card.className = 'index-card';
+    card.innerHTML = `
+      <div class="index-card-label">${label}</div>
+      <div class="index-card-score">${score}<span style="font-size:16px;color:var(--sage)">/10</span></div>
+      <div class="index-card-bar"><div class="index-card-bar-fill" style="width:0%" data-target="${score*10}"></div></div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Animate bars
+  setTimeout(() => {
+    document.querySelectorAll('.index-card-bar-fill').forEach(bar => {
+      bar.style.width = bar.dataset.target + '%';
+    });
+  }, 300);
+
+  // Diagnostic texts
+  const diag = generateDiagnostic(indices);
+  const diagWrap = document.getElementById('diagnosticBlocks');
+  diagWrap.innerHTML = '';
+  diag.forEach(d => {
+    const block = document.createElement('div');
+    block.className = 'diagnostic-block';
+    block.innerHTML = `<h3>${d.title}</h3><p>${d.text}</p>`;
+    diagWrap.appendChild(block);
+  });
+}
+
+// ── FORMAT FOR EMAIL ──────────────────────────────────────────
+function formatResultsForEmail(data, indices) {
+  const lines = ['═══════════════════════════════════', 'ECOSYSTEM INTELLIGENCE AUDIT™', '═══════════════════════════════════', ''];
+
+  lines.push(`Client : ${document.getElementById('client_name').value}`);
+  lines.push(`Email : ${document.getElementById('client_email').value}`);
+  lines.push(`Organisation : ${document.getElementById('client_org').value}`);
+  lines.push(`Rôle : ${document.getElementById('client_role').value || '—'}`);
+  lines.push('');
+  lines.push('── INDICES DE VITALITÉ ─────────────');
+  Object.entries(indices).forEach(([k,v]) => lines.push(`${k} : ${v}/10`));
+  lines.push('');
+
+  const sections = [
+    { title: 'SECTION 1 — Raison d\'être & Data', keys: ['s1q1','s1q3','s1q5','s1q6','s1q7_detail','s1q8_detail','s1q10'] },
+    { title: 'SECTION 2 — Structure & Gouvernance', keys: ['s2q1','s2q2','s2q3_detail','s2q4','s2q5_detail','s2q6','s2q8_detail'] },
+    { title: 'SECTION 3 — Ressources humaines', keys: ['s3q1','s3q3','s3q4_detail','s3q5','s3q6_detail','s3q9','s3q11'] },
+    { title: 'SECTION 4 — Processus & Flux', keys: ['s4q1','s4q3','s4q5','s4q6','s4q7_detail','s4q10'] },
+    { title: 'SECTION 5 — Structure financière', keys: ['s5q1','s5q2','s5q3','s5q4','s5q5','s5q6','s5q7','s5q8','s5q10'] },
+  ];
+
+  sections.forEach(s => {
+    lines.push(`── ${s.title} ──`);
+    s.keys.forEach(k => {
+      if (data[k]) lines.push(`${k} : ${data[k]}`);
+    });
+    lines.push('');
+  });
+
+  return lines.join('\n');
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────
+async function submitAudit() {
+  const name  = document.getElementById('client_name').value.trim();
+  const email = document.getElementById('client_email').value.trim();
+  const org   = document.getElementById('client_org').value.trim();
+
+  if (!name || !email || !org) {
+    document.getElementById('statusMsg').textContent = 'Merci de renseigner votre nom, email et organisation.';
+    document.getElementById('statusMsg').style.color = '#e8a87c';
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Envoi en cours…';
+  document.getElementById('statusMsg').textContent = '';
+
+  const data = collectData();
+  const indices = computeIndices(data);
+  const resultsText = formatResultsForEmail(data, indices);
+
+  // Build results locally first
+  buildResults(indices);
+  document.getElementById('results-panel').style.display = 'block';
+  document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try {
+    await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+      client_name: name,
+      client_email: email,
+      client_org: org,
+      results: resultsText,
+    });
+    btn.textContent = 'Audit soumis ✓';
+    document.getElementById('statusMsg').textContent = 'Vos résultats vous ont été envoyés par email.';
+    document.getElementById('statusMsg').style.color = 'var(--lichen)';
+  } catch(err) {
+    btn.disabled = false;
+    btn.textContent = 'Soumettre l\'audit';
+    document.getElementById('statusMsg').textContent =
+      'Erreur d\'envoi email. Vos résultats sont visibles ci-dessous — contactez directement rinkiohenconseil.com';
+    document.getElementById('statusMsg').style.color = '#e8a87c';
+    console.error('EmailJS error:', err);
+  }
+}
+
+// Init progress
+updateProgress();
+</script>
+</body>
+</html>
